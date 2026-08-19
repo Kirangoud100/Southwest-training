@@ -5,8 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  multiple-jobs:
-    test:
+  test:
      runs-on: ubuntu-latest
      steps:
       - run: echo "testing..."
