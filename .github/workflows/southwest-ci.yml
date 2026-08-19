@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "Checking required Southwest files..."
           test -f morning-report.sh && echo "✅ morning-report.sh found" || exit 1
+          test -f log-files.sh && echo "✅ morning-report.sh found" || exit 1"
           test -f error-check.sh && echo "✅ error-check.sh found" || exit 1
           echo "All required files present!"
 
