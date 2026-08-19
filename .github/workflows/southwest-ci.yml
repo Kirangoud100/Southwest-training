@@ -44,3 +44,9 @@ jobs:
       - name: Pipeline complete
         run: echo "✅ All checks passed — safe to deploy!"
 
+      - name: Show repo summary
+        run: |
+          echo "Checking .sh files are there in the repo"
+          bash -n ls *.sh | wc -l  "✅ counted number of .sh files" || exit 1
+          bash -n ls *.log | wc -l "✅ Checks the log files" || exit 1
+
