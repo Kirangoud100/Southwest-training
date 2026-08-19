@@ -1,0 +1,16 @@
+name: practice
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  linux-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print date
+        run: echo "hello today's date is 19th aug"
+
+      - name: Print date
+        run: echo "Hello todays d"
