@@ -17,23 +17,29 @@ jobs:
       - name: Run system health check
         run: |
           echo "=== Southwest CI Pipeline Starting ==="
-          echo "Checking system..."
           date
           echo "Branch: ${{ github.ref }}"
           echo "Commit: ${{ github.sha }}"
 
-      - name: Check flight scripts exist
+      - name: Check required files exist
         run: |
-          echo "Verifying Southwest scripts are present..."
-          ls -la *.sh 2>/dev/null && echo "✅ Scripts found" || echo "⚠️ No scripts yet"
+          echo "Checking required Southwest files..."
+          test -f morning-report.sh && echo "✅ morning-report.sh found" || exit 1
+          test -f error-check.sh && echo "✅ error-check.sh found" || exit 1
+          echo "All required files present!"
 
-      - name: Run mock tests
+      - name: Check scripts are executable
         run: |
-          echo "Running Southwest system tests..."
-          echo "Test 1: Flight status check... PASSED ✅"
-          echo "Test 2: Baggage tracker check... PASSED ✅"
-          echo "Test 3: API health check... PASSED ✅"
-          echo "All tests passed! Safe to deploy."
+          echo "Checking script permissions..."
+          test -x morning-report.sh && echo "✅ morning-report.sh is executable" || exit 1
+          test -x error-check.sh && echo "✅ error-check.sh is executable" || exit 1
+
+      - name: Run syntax check
+        run: |
+          echo "Checking bash syntax..."
+          bash -n morning-report.sh && echo "✅ morning-report.sh syntax OK" || exit 1
+          bash -n error-check.sh && echo "✅ error-check.sh syntax OK" || exit 1
 
       - name: Pipeline complete
-        run: echo "✅ Southwest CI Pipeline complete — code is safe!"
+        run: echo "✅ All checks passed — safe to deploy!"
+
