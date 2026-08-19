@@ -46,7 +46,8 @@ jobs:
 
       - name: Show repo summary
         run: |
-          echo "Checking .sh files are there in the repo"
-          bash -n ls *.sh | wc -l  "✅ counted number of .sh files" || exit 1
-          bash -n ls *.log | wc -l "✅ Checks the log files" || exit 1
-
+          count_sh=$(ls *.sh | wc -l)
+          echo "✅ $count_sh .sh files found"
+          coutn_log=$(ls *.log | wc -l)
+          echo "✅$count_log .log files found"
+          echo "Southwest repo is completed"
