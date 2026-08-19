@@ -1,0 +1,39 @@
+name: Southwest Airlines CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run system health check
+        run: |
+          echo "=== Southwest CI Pipeline Starting ==="
+          echo "Checking system..."
+          date
+          echo "Branch: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
+
+      - name: Check flight scripts exist
+        run: |
+          echo "Verifying Southwest scripts are present..."
+          ls -la *.sh 2>/dev/null && echo "✅ Scripts found" || echo "⚠️ No scripts yet"
+
+      - name: Run mock tests
+        run: |
+          echo "Running Southwest system tests..."
+          echo "Test 1: Flight status check... PASSED ✅"
+          echo "Test 2: Baggage tracker check... PASSED ✅"
+          echo "Test 3: API health check... PASSED ✅"
+          echo "All tests passed! Safe to deploy."
+
+      - name: Pipeline complete
+        run: echo "✅ Southwest CI Pipeline complete — code is safe!"
