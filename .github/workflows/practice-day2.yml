@@ -2,12 +2,11 @@ name: SOuthwest practice
 
 on:
   push:
-    branches:[ master ] 
+    branches: [ master ]
 
 jobs:
   file-check:
     runs-on: ubuntu-latest
-      steps:
-        - name: baggage-tracking:
-          run:  test -f baggage-tracker.log && echo "Found " ||exit 1
-o
+    steps:
+      - name: baggage-tracking
+        run:  test -f baggage-tracker.log && echo "Found " ||exit 1
