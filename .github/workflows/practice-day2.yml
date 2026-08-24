@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
 env:
-  AIRLINE: "SOUTHWEST SIRLINES"
+  AIRLINE: "SOUTHWEST AIRLINES"
   LOG_FILE: "baggage-tracker.log"
 
 jobs:
