@@ -3,6 +3,9 @@ name: SOuthwest practice
 on:
   push:
     branches: [ master ]
+env:
+  AIRLINE: "SOUTHWEST SIRLINES"
+  LOG_FILE: "baggage-tracker.log"
 
 jobs:
   file-check:
@@ -11,6 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Print airline
+        uses: echo "Checking $AIRLINE  systems..."
 
       - name: baggage-tracking
-        run:  test -f baggage-tracker.log && echo "Found " ||exit 1
+        run:  test -f $LOG_FILE  && echo "Found $LOG_FILE" ||exit 1
