@@ -1,0 +1,23 @@
+name: practicing env
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  AIRLINES: "Southwest"
+  LOG_FILE: "flight-status.log"
+
+jobs:
+  flight-status-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout flights
+        uses: actions/checkout@v4
+
+      - name: print airline
+        run: echo "CHECKING $AIRLINES"
+
+      - name: check log file
+        run: test -f $LOG_FILE && echo "found" || exit 1
+
