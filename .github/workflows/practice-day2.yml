@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Print airline
-        uses: echo "Checking $AIRLINE  systems..."
+        run: echo "Checking $AIRLINE  systems..."
 
       - name: baggage-tracking
         run:  test -f $LOG_FILE  && echo "Found $LOG_FILE" ||exit 1
