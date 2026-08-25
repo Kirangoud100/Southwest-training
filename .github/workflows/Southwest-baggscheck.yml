@@ -1,0 +1,34 @@
+name: Southwest baggage crisis
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  BAGS: baggage-tracker.log
+
+jobs:
+  baggage-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: baggage-file
+        uses: actions/checkout@v4
+
+      - name: starting-message
+        run: echo "Starting baggage check crisis..."
+
+      - name:  checking-the-bags
+        run: |
+          test -f $BAGS  || (echo "file missing" && exit 1)
+          wc -l $BAGS
+          COUNT=$(grep -c "LOST" $BAGS)
+          if [ $COUNT -gt 5 ]; then 
+            echo "Critical: Too many lost bags"
+            exit 1
+          fi
+          grep  "DAMAGED" $BAGS || true
+
+      - name: complete-message
+        run: echo "Baggage check is complete"
