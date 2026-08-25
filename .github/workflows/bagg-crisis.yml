@@ -1,0 +1,32 @@
+name: baggage-crisis
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  BAGS_TRACK: baggage-tracker.log
+
+jobs:
+  baggage-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checking-bags
+      uses: actions/checkout@v4
+
+    - name: printing-the-status
+      run: echo "Baggae cheking started"
+
+    - name: checking-all-bagdetails
+      run: |
+        test -f "$BAGS_TRACK"  || (echo "failed"; exit 1)
+        COUNT=$(grep -c "LOST" "$BAGS_TRACK")
+
+        if [ $COUNT -gt 0 ]; then
+           echo "Lostbags found: $COUNT"
+           exit 1
+        fi
+          echo  "number of bags lost:  $COUNT" && echo "no bags lost" || exit 1
+ - name: Baggage-cystem-clear
+      run: echo "Baggage scan complete — all bags accounted for"
