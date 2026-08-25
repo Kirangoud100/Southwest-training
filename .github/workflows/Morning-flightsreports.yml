@@ -1,0 +1,39 @@
+name: Morning Flight Report Pipeline
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  FLIGHT_LOG: flight-status.log
+  REPORT_SCRIPT: morning-report.sh
+
+
+jobs:
+  morning-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: morning-report-checkfiles
+      uses: actions/checkout@v4
+
+    - name: make script execuatble
+      run: chmod +x $REPORT_SCRIPT
+
+    - name:  Run morning report
+      run: ./$REPORT_SCRIPT
+
+    - name: reportstarts-fromhere
+      run: echo "Morning reports and flight status starts from here"
+
+    - name: checkingandprintingfiles
+      run: |
+        test -f $REPORT_SCRIPT || true
+        COUNT=$(grep -c "CANCELLED" "$FLIGHT_LOG")
+        if [ $COUNT -gt 3 ]; then
+          echo "found the cancelled flights: $COUNT"
+          exit 1
+        fi
+
+    - name: Ending
+      run: echo "closing the report"
