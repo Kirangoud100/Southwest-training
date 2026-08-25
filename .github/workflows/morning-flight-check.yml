@@ -1,0 +1,34 @@
+name: Southwest-flights-check
+
+on:
+  push:
+    branches: [ master ]
+
+
+env:
+  LOG_FILE: flight-status.log
+
+jobs:
+  flight-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: search-database
+        uses: actions/checkout@v4
+
+      - name:  flight-status
+        run: echo "Flight status checking ..."
+
+      - name: nubmber-of-lines
+        run: test -f $LOG_FILE || (echo "File missing" && exit 1)
+
+      - name: file-found
+        run: wc -l $LOG_FILE  
+
+      - name: cancelled-flights
+        run: grep "CANCELLED" $LOG_FILE || true
+
+      - name: Report-end
+        run: echo "Morning flights report complete"
+
+
