@@ -28,5 +28,5 @@ jobs:
            exit 1
         fi
           echo  "number of bags lost:  $COUNT" && echo "no bags lost" || exit 1
- - name: Baggage-cystem-clear
-      run: echo "Baggage scan complete — all bags accounted for"
+    - name: Baggage-cystem-clear
+      run: "Baggage scan complete — all bags accounted for"
