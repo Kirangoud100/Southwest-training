@@ -1,0 +1,38 @@
+name: deployment
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+    ERROR_LOG: system-errors.log
+    ERROR_SCRIPT: error-check.sh
+
+jobs:
+  error-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: script escutalble
+        run: chmod +x $ERROR_SCRIPT
+
+      - name: scan for errors
+        run: |
+          COUNT=$(grep -c "ERROR" "$ERROR_LOG")
+          if [ $COUNT -gt 5 ]; then
+            echo "Errors found: $COUNT"
+            exit 1
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: error-check
+    steps:
+      - name: Deployment started
+        run: echo "All checks passed - Deploying southwest airlines"
+
+      - name: Deployment-completed
+        run:  echo "Southwest deployment completed"
+
