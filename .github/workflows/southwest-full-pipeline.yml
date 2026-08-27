@@ -31,7 +31,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-    steps: 
       - name: execute the following
         run: |
           chmod +x flight-status.log
@@ -45,7 +44,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-    steps:
       - name: if-trying
         if: github.ref == 'refs/heads/master'
         run: echo "Deploying Southwest deployment to production"
@@ -55,6 +53,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
       - name: testing-if
         if: failure()
         run: echo "ALERT--Southwest pipeline failed"
