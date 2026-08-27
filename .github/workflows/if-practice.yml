@@ -1,0 +1,21 @@
+name: if practice
+
+on:
+  push:
+    branche: [ master ]
+
+jobs:
+  smart-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: step1-if
+        if: github.ref == 'refs/heads/master'
+        run: echo "Running on master branch"
+
+      - name: step2-if 
+        if: github.ref != 'refs/head/master'
+        run: echo "Not master- running tests only"
