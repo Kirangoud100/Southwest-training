@@ -1,0 +1,49 @@
+name: Southwest airlines full pipeline
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  AIRLINE: "Southwest"
+  LOG_FILE: flight-status.log
+  SCRIPT: morning-report.sh
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: execute
+        run: |
+          chmod +x morning-report.sh
+          cat morning-report.sh
+          bash -n morning-report.sh
+
+  test:
+    needs: validate
+
+    steps: 
+      - name: execute the following
+        run: |
+          chmod +x flight-status.log
+          cat flight-status.log
+
+  deploy:
+    needs: test
+
+    steps:
+      - name: if-trying
+        if: github.ref == 'refs/heads/master'
+        run: echo "Deploying Southwest deployment to production"
+
+  alert:
+    needs: test
+
+    steps:
+      - name: testing-if
+        if: failure()
+        run: echo "ALERT--Southwest pipeline failed"
