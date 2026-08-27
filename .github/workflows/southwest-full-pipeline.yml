@@ -27,6 +27,10 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
 
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
     steps: 
       - name: execute the following
         run: |
@@ -36,6 +40,10 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
 
     steps:
       - name: if-trying
